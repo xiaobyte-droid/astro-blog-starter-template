@@ -1,0 +1,403 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+
+const pageTitle = '问道浮生录角色对话查询';
+const pageDescription = '输入角色名称或拼音首字母查询对应的对话编号';
+
+const charactersData = [
+	{ name: '阿依舍', dialog: '11', pinyin: 'ays' },
+	{ name: '敖栾', dialog: '21', pinyin: 'al' },
+	{ name: '白骨精', dialog: '12', pinyin: 'bgj' },
+	{ name: '毕方长老', dialog: '21', pinyin: 'bfzl' },
+	{ name: '碧玉童子', dialog: '11', pinyin: 'bytz' },
+	{ name: '冰媚儿', dialog: '21', pinyin: 'bme' },
+	{ name: '彩云童子', dialog: '12', pinyin: 'cytz' },
+	{ name: '蚩尤', dialog: '21', pinyin: 'cy' },
+	{ name: '赤精子', dialog: '11', pinyin: 'cjz' },
+	{ name: '赤霞童子', dialog: '11', pinyin: 'cxtz' },
+	{ name: '刺猬怪', dialog: '11', pinyin: 'cwg' },
+	{ name: '重黎', dialog: '21', pinyin: 'cl' },
+	{ name: '大将军', dialog: '22', pinyin: 'djj' },
+	{ name: '大王子', dialog: '11', pinyin: 'dwz' },
+	{ name: '地藏王', dialog: '11', pinyin: 'dzw' },
+	{ name: '地烈阵主', dialog: '11', pinyin: 'dlzz' },
+	{ name: '帝辛', dialog: '12', pinyin: 'dx' },
+	{ name: '东海龙女', dialog: '22', pinyin: 'dhln' },
+	{ name: '东海龙王', dialog: '11', pinyin: 'dhlw' },
+	{ name: '东皇太一', dialog: '21', pinyin: 'dhty' },
+	{ name: '多闻道人', dialog: '12', pinyin: 'dwdr' },
+	{ name: '方大刚', dialog: '11', pinyin: 'fdg' },
+	{ name: '费仲', dialog: '12', pinyin: 'fz' },
+	{ name: '风吼阵主', dialog: '12', pinyin: 'fhzz' },
+	{ name: '肥遗', dialog: '12', pinyin: 'fy' },
+	{ name: '高兰英', dialog: '12', pinyin: 'gly' },
+	{ name: '钩蛇', dialog: '11', pinyin: 'gs' },
+	{ name: '蛊雕', dialog: '11', pinyin: 'gd' },
+	{ name: '龟丞相', dialog: '22', pinyin: 'gcx' },
+	{ name: '寒冰阵主', dialog: '12', pinyin: 'hbzz' },
+	{ name: '憾地魔', dialog: '12', pinyin: 'hdm' },
+	{ name: '何罗', dialog: '22', pinyin: 'hl' },
+	{ name: '黑山老妖', dialog: '12', pinyin: 'hsly' },
+	{ name: '横公鱼', dialog: '12', pinyin: 'hgy' },
+	{ name: '红砂阵主', dialog: '12', pinyin: 'hszz' },
+	{ name: '红水阵主', dialog: '22', pinyin: 'hszz' },
+	{ name: '虎蛟', dialog: '12', pinyin: 'hj' },
+	{ name: '扈九', dialog: '22', pinyin: 'hj' },
+	{ name: '化血阵主', dialog: '12', pinyin: 'hxzz' },
+	{ name: '黄风童子', dialog: '21', pinyin: 'hftz' },
+	{ name: '计蒙', dialog: '12', pinyin: 'jm' },
+	{ name: '鲛人', dialog: '21', pinyin: 'jr' },
+	{ name: '接引道人', dialog: '21', pinyin: 'jydr' },
+	{ name: '金光仙', dialog: '22', pinyin: 'jgx' },
+	{ name: '金光阵主', dialog: '22', pinyin: 'jgzz' },
+	{ name: '金角大仙', dialog: '12', pinyin: 'jjdx' },
+	{ name: '静琪', dialog: '12', pinyin: 'jq' },
+	{ name: '精卫', dialog: '11', pinyin: 'jw' },
+	{ name: '惧留孙', dialog: '12', pinyin: 'jls' },
+	{ name: '菊娘子', dialog: '22', pinyin: 'jnz' },
+	{ name: '夔牛', dialog: '11', pinyin: 'kn' },
+	{ name: '孔宣', dialog: '11', pinyin: 'kx' },
+	{ name: '狸佑', dialog: '21', pinyin: 'ly' },
+	{ name: '莲花姑娘', dialog: '21', pinyin: 'lhgn' },
+	{ name: '烈焰阵主', dialog: '12', pinyin: 'lyzz' },
+	{ name: '灵兽异人', dialog: '12', pinyin: 'lsyr' },
+	{ name: '灵牙仙', dialog: '22', pinyin: 'lyx' },
+	{ name: '琉璃', dialog: '22', pinyin: 'll' },
+	{ name: '龙吉公主', dialog: '22', pinyin: 'ljgz' },
+	{ name: '龙族后裔', dialog: '22', pinyin: 'lzhy' },
+	{ name: '鹿蜀', dialog: '21', pinyin: 'ls' },
+	{ name: '陆压真人', dialog: '12', pinyin: 'lyzr' },
+	{ name: '绿玉君', dialog: '22', pinyin: 'lyj' },
+	{ name: '罗喉', dialog: '22', pinyin: 'lh' },
+	{ name: '落魄阵主', dialog: '12', pinyin: 'lpzz' },
+	{ name: '马元', dialog: '21', pinyin: 'my' },
+	{ name: '孟婆', dialog: '12', pinyin: 'mp' },
+	{ name: '梦瑶', dialog: '11', pinyin: 'my' },
+	{ name: '鸣蛇', dialog: '12', pinyin: 'ms' },
+	{ name: '摩珂迦罗', dialog: '12', pinyin: 'mkjl' },
+	{ name: '木每姬', dialog: '21', pinyin: 'mmj' },
+	{ name: '沐婉', dialog: '11', pinyin: 'mw' },
+	{ name: '南极仙翁', dialog: '22', pinyin: 'njxw' },
+	{ name: '牛魔王', dialog: '12', pinyin: 'nmw' },
+	{ name: '辟尘大王', dialog: '21', pinyin: 'pcdw' },
+	{ name: '辟寒大王', dialog: '22', pinyin: 'phdw' },
+	{ name: '辟暑大王', dialog: '11', pinyin: 'psdw' },
+	{ name: '普贤真人', dialog: '12', pinyin: 'pxzr' },
+	{ name: '齐天大圣', dialog: '11', pinyin: 'qtds' },
+	{ name: '乾达多', dialog: '11', pinyin: 'qdd' },
+	{ name: '秦校尉', dialog: '11', pinyin: 'qxw' },
+	{ name: '琴楠', dialog: '21', pinyin: 'qn' },
+	{ name: '虬首仙', dialog: '22', pinyin: 'qsx' },
+	{ name: '上古妖王', dialog: '12', pinyin: 'sgyw' },
+	{ name: '十八公', dialog: '11', pinyin: 'sbg' },
+	{ name: '石矶娘娘', dialog: '12', pinyin: 'sjnn' },
+	{ name: '噬天魔', dialog: '11', pinyin: 'stm' },
+	{ name: '黍七公', dialog: '12', pinyin: 'sqg' },
+	{ name: '水灵童子', dialog: '12', pinyin: 'sltz' },
+	{ name: '太妙真君', dialog: '22', pinyin: 'tmzj' },
+	{ name: '太玄真君', dialog: '11', pinyin: 'txzj' },
+	{ name: '太乙真人', dialog: '21', pinyin: 'tyzr' },
+	{ name: '天宫护卫', dialog: '11', pinyin: 'tghw' },
+	{ name: '天宫神将', dialog: '12', pinyin: 'tgsj' },
+	{ name: '天机老人', dialog: '12', pinyin: 'tglr' },
+	{ name: '天魔厄', dialog: '12', pinyin: 'tme' },
+	{ name: '天魔垢', dialog: '12', pinyin: 'tmg' },
+	{ name: '天魔劫', dialog: '21', pinyin: 'tmj' },
+	{ name: '天魔殇', dialog: '11', pinyin: 'tms' },
+	{ name: '天魔枭', dialog: '21', pinyin: 'tmx' },
+	{ name: '天鹏妖师', dialog: '21', pinyin: 'tpys' },
+	{ name: '天阙阵主', dialog: '12', pinyin: 'tqzz' },
+	{ name: '天竺公主', dialog: '12', pinyin: 'tzgz' },
+	{ name: '韦护', dialog: '22', pinyin: 'wh' },
+	{ name: '文殊天尊', dialog: '21', pinyin: 'wstz' },
+	{ name: '乌云仙', dialog: '12', pinyin: 'wyx' },
+	{ name: '无当圣母', dialog: '11', pinyin: 'wdsm' },
+	{ name: '无念僧', dialog: '11', pinyin: 'wns' },
+	{ name: '无想僧', dialog: '11', pinyin: 'wxs' },
+	{ name: '武德星君', dialog: '11', pinyin: 'wdxj' },
+	{ name: '西域国王', dialog: '11', pinyin: 'xygw' },
+	{ name: '夏总兵', dialog: '12', pinyin: 'xzb' },
+	{ name: '香菱', dialog: '11', pinyin: 'xl' },
+	{ name: '萧臻', dialog: '11', pinyin: 'xz' },
+	{ name: '小王子', dialog: '11', pinyin: 'xwz' },
+	{ name: '熊怪', dialog: '11', pinyin: 'xg' },
+	{ name: '许飞琼', dialog: '12', pinyin: 'xfq' },
+	{ name: '玄都法师', dialog: '11', pinyin: 'xdfs' },
+	{ name: '薛统领', dialog: '11', pinyin: 'xtl' },
+	{ name: '巡游仙将', dialog: '11', pinyin: 'xyxj' },
+	{ name: '魇魅', dialog: '12', pinyin: 'ym' },
+	{ name: '阳圣', dialog: '21', pinyin: 'ys' },
+	{ name: '杨镖头', dialog: '12', pinyin: 'ybt' },
+	{ name: '妖狼王', dialog: '12', pinyin: 'ylw' },
+	{ name: '翊圣真君', dialog: '21', pinyin: 'yszj' },
+	{ name: '阴圣', dialog: '21', pinyin: 'ys' },
+	{ name: '尹喜', dialog: '11', pinyin: 'yx' },
+	{ name: '尤浑', dialog: '11', pinyin: 'yh' },
+	{ name: '佑圣真君', dialog: '12', pinyin: 'yszj' },
+	{ name: '鱼怪', dialog: '12', pinyin: 'yg' },
+	{ name: '怨灵鬼将', dialog: '12', pinyin: 'ylgj' },
+	{ name: '云傲天', dialog: '22', pinyin: 'yat' },
+	{ name: '云霄童子', dialog: '11', pinyin: 'yxtz' },
+	{ name: '云中子', dialog: '22', pinyin: 'yzz' },
+	{ name: '芸熙', dialog: '22', pinyin: 'yx' },
+	{ name: '张奎', dialog: '12', pinyin: 'zk' },
+	{ name: '掌令使', dialog: '11', pinyin: 'zls' },
+	{ name: '芝仙', dialog: '21', pinyin: 'zx' },
+	{ name: '蜘蛛精', dialog: '21', pinyin: 'zzj' },
+	{ name: '诸健', dialog: '21', pinyin: 'zj' },
+	{ name: '猪婆龙', dialog: '11', pinyin: 'zpl' },
+	{ name: '朱厌', dialog: '22', pinyin: 'zy' },
+	{ name: '准提道人', dialog: '12', pinyin: 'ztdr' },
+	{ name: '紫霞真人', dialog: '12', pinyin: 'zxzr' },
+];
+---
+
+<!doctype html>
+<html lang="zh-CN">
+	<head>
+		<BaseHead title={pageTitle} description={pageDescription} />
+		<style>
+			main {
+				width: 860px;
+				max-width: calc(100% - 2rem);
+				padding: 2rem 1rem;
+			}
+
+			.container {
+				margin: 0 auto;
+				padding: 1.5rem;
+				border: 1px solid rgb(var(--gray-light));
+				border-radius: 8px;
+				background: #fff;
+				box-shadow: 0 10px 30px rgba(var(--gray), 18%);
+			}
+
+			.header {
+				margin-bottom: 1.5rem;
+				padding-bottom: 1rem;
+				border-bottom: 1px solid #ebeef5;
+				text-align: center;
+			}
+
+			.header h1 {
+				margin-bottom: 0.5rem;
+				color: #2f6fbd;
+				font-size: 2rem;
+			}
+
+			.header p {
+				margin: 0;
+				color: #6b7280;
+				font-size: 1rem;
+			}
+
+			.search-section {
+				margin-bottom: 1.5rem;
+			}
+
+			.search-form {
+				display: flex;
+				gap: 0.75rem;
+			}
+
+			.search-input {
+				min-width: 0;
+				flex: 1;
+				padding: 0.75rem 0.9rem;
+				border: 1px solid #dcdfe6;
+				border-radius: 6px;
+				color: #1f2937;
+				font: inherit;
+				font-size: 1rem;
+				line-height: 1.4;
+				outline: none;
+			}
+
+			.search-input:focus {
+				border-color: #409eff;
+				box-shadow: 0 0 0 3px rgba(64, 158, 255, 18%);
+			}
+
+			.search-button {
+				flex: 0 0 auto;
+				padding: 0 1.25rem;
+				border: 1px solid #409eff;
+				border-radius: 6px;
+				background: #409eff;
+				color: #fff;
+				font: inherit;
+				font-size: 1rem;
+				cursor: pointer;
+			}
+
+			.search-button:hover {
+				background: #2f86dd;
+				border-color: #2f86dd;
+			}
+
+			.result-section {
+				margin-top: 1rem;
+			}
+
+			.results-list {
+				display: grid;
+				gap: 0.75rem;
+			}
+
+			.results-list:empty {
+				display: none;
+			}
+
+			.character-card {
+				padding: 0.85rem 1rem;
+				border-left: 4px solid #409eff;
+				border-radius: 4px;
+				background-color: #f9fafc;
+			}
+
+			.character-name {
+				margin-bottom: 0.25rem;
+				color: #1f2937;
+				font-size: 1rem;
+				font-weight: 700;
+			}
+
+			.character-dialog {
+				color: #43a047;
+				font-size: 1.1rem;
+				font-weight: 700;
+			}
+
+			.no-result {
+				padding: 1rem;
+				color: #909399;
+				text-align: center;
+			}
+
+			@media (max-width: 560px) {
+				main {
+					max-width: 100%;
+					padding: 1rem;
+				}
+
+				.container {
+					padding: 1rem;
+				}
+
+				.header h1 {
+					font-size: 1.5rem;
+				}
+
+				.search-form {
+					flex-direction: column;
+				}
+
+				.search-button {
+					min-height: 2.75rem;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<div class="container">
+				<div class="header">
+					<h1>{pageTitle}</h1>
+					<p>{pageDescription}</p>
+				</div>
+
+				<div class="search-section">
+					<form class="search-form" id="search-form">
+						<label class="sr-only" for="character-search">角色名称或拼音首字母</label>
+						<input
+							class="search-input"
+							id="character-search"
+							type="search"
+							placeholder="请输入角色名称或拼音首字母，如：龙吉公主 或 ljgz"
+							autocomplete="off"
+						/>
+						<button class="search-button" type="submit">搜索</button>
+					</form>
+				</div>
+
+				<div class="result-section" aria-live="polite">
+					<div class="results-list" id="results-list"></div>
+					<div class="no-result" id="empty-state">请输入角色名称或拼音首字母进行查询</div>
+				</div>
+			</div>
+		</main>
+
+		<template id="character-card-template">
+			<div class="character-card">
+				<div class="character-name"></div>
+				<div class="character-dialog"></div>
+			</div>
+		</template>
+
+		<script define:vars={{ charactersData }}>
+			const searchForm = document.querySelector('#search-form');
+			const searchInput = document.querySelector('#character-search');
+			const resultsList = document.querySelector('#results-list');
+			const emptyState = document.querySelector('#empty-state');
+			const cardTemplate = document.querySelector('#character-card-template');
+
+			function renderResults(results, query) {
+				if (!resultsList || !emptyState || !(cardTemplate instanceof HTMLTemplateElement)) {
+					return;
+				}
+
+				resultsList.replaceChildren();
+
+				if (!query) {
+					emptyState.hidden = false;
+					emptyState.textContent = '请输入角色名称或拼音首字母进行查询';
+					return;
+				}
+
+				if (!results.length) {
+					emptyState.hidden = false;
+					emptyState.textContent = '未找到匹配的角色';
+					return;
+				}
+
+				emptyState.hidden = true;
+				emptyState.textContent = '';
+
+				const fragment = document.createDocumentFragment();
+				results.forEach((character) => {
+					const card = cardTemplate.content.cloneNode(true);
+					const name = card.querySelector('.character-name');
+					const dialog = card.querySelector('.character-dialog');
+
+					if (name) name.textContent = character.name;
+					if (dialog) dialog.textContent = `对话编号：${character.dialog}`;
+
+					fragment.appendChild(card);
+				});
+
+				resultsList.appendChild(fragment);
+			}
+
+			function handleSearch() {
+				if (!(searchInput instanceof HTMLInputElement)) {
+					return;
+				}
+
+				const query = searchInput.value.trim().toLowerCase();
+				const results = query
+					? charactersData.filter((character) =>
+							character.name.toLowerCase().includes(query) || character.pinyin.includes(query),
+						)
+					: [];
+
+				renderResults(results, query);
+			}
+
+			searchInput?.addEventListener('input', handleSearch);
+			searchForm?.addEventListener('submit', (event) => {
+				event.preventDefault();
+				handleSearch();
+			});
+		</script>
+	</body>
+</html>
