@@ -24,7 +24,7 @@ pubDate: "Jul 15 2022"
    bindPort = 7000
    
    auth.method = "token"
-   auth.token = "token123456jwb"
+   auth.token = "token123456"
    
    webServer.addr = "0.0.0.0"
    webServer.port = 7500
@@ -324,7 +324,7 @@ pubDate: "Jul 15 2022"
     podman pull docker.io/postgres:16
     
     podman run -d \
-      --name telehub-postgres \
+      --name xxx-postgres \
       --restart=always \
       -p 5432:5432 \
       -e POSTGRES_USER=xxx \
@@ -335,14 +335,14 @@ pubDate: "Jul 15 2022"
       -v ~/data/postgresql:/var/lib/postgresql/data:Z \
       c6199d53bd7e
       
-      podman exec -it telehub-postgres bash
+      podman exec -it xxx-postgres bash
       
-      psql -U telehub -d telehubdb
+      psql -U xxx -d xxxdb
       
       
       #备份到另一个容器
       podman run -d \
-      --name telehub-postgres \
+      --name xxx-postgres \
       --restart=always \
       -p 5432:5432 \
       -v ~/data/postgresql:/var/lib/postgresql/data:Z \
