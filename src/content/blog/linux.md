@@ -1,3 +1,9 @@
+---
+title: "常用命令"
+description: "Lorem ipsum dolor sit amet"
+pubDate: "Jul 15 2022"
+---
+
 ```
 # ssh是否被爆破
 sudo lastb -n 20
