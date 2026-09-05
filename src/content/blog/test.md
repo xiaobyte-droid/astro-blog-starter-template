@@ -2,6 +2,7 @@
 title: "常用命令"
 description: "Lorem ipsum dolor sit amet"
 pubDate: "Jul 15 2022"
+heroImage: "/blog-placeholder-2.jpg"
 ---
 
 1. 目录映射 
